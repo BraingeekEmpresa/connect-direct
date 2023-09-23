@@ -49,8 +49,7 @@ resource "aws_iam_policy" "efs_csi_iam_policy" {
   name        = "${var.cluster_name}-AmazonEKS_EFS_CSI_Driver_Policy"
   path        = "/"
   description = "EFS CSI IAM Policy"
-  #policy = data.http.efs_csi_iam_policy.body
-  policy = data.http.efs_csi_iam_policy.response_body
+  policy = data.http.efs_csi_iam_policy.body
 }
 
 
@@ -68,7 +67,7 @@ resource "aws_iam_role" "efs_csi_iam_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Federated = "arn:aws:iam::170173684608:oidc-provider/${replace(aws_eks_cluster.eks_cluster.identity.0.oidc.0.issuer, "https://", "")}"
+          Federated = "arn:aws:iam::967865641205:oidc-provider/${replace(aws_eks_cluster.eks_cluster.identity.0.oidc.0.issuer, "https://", "")}"
         }
         Condition = {
           StringEquals = {
