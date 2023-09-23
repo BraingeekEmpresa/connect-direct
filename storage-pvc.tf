@@ -1,5 +1,9 @@
 # Resource: Kubernetes Storage Class
-
+resource "kubernetes_namespace" "namespace_development" {
+  metadata {
+    name      = "efs"
+  }
+}
 
 resource "kubernetes_storage_class_v1" "efs_sc" {  
   metadata {
@@ -20,6 +24,7 @@ resource "kubernetes_storage_class_v1" "efs_sc" {
 resource "kubernetes_persistent_volume_claim_v1" "efs_pvc" {
   metadata {
     name = "efs-claim"
+    namespace= "efs"
   }
   spec {
     access_modes = ["ReadWriteMany"]
