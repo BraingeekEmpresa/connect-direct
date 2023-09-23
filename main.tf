@@ -1,9 +1,10 @@
-provider "aws" {
-  region = "us-west-2"
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = aws_eks_cluster.eks_cluster.id
 }
 
 resource "aws_eks_cluster" "eks_cluster" {
-  name     = "eks-culqui-connect-direct"
+  name     = "${var.cluster_name}"
   role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
@@ -67,12 +68,8 @@ resource "aws_eks_node_group" "eks_nodes_primary" {
   #}
 
   subnet_ids = ["subnet-06a8f51a98f16cf51", "subnet-06df8b366d1578274", "subnet-097c674a3a517bec2"]
-  instance_types = ["t2.micro"]
+  instance_types = ["t3a.xlarge"]
 }
-
-
-
-
 
 
 resource "aws_iam_role" "example" {
